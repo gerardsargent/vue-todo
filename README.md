@@ -1,10 +1,10 @@
-# vue-hot-reloading
+# Vue Todo
 
-> A Vue.js project
+> A simple Todo application to experiment with Vue.js
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
