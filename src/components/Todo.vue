@@ -67,6 +67,16 @@ export default {
     };
   },
 
+  mounted() {
+    if (localStorage.getItem("todos")) {
+      try {
+        this.todos = JSON.parse(localStorage.getItem("todos"));
+      } catch (e) {
+        localStorage.removeItem("todos");
+      }
+    }
+  },
+
   methods: {
     addTodo() {
       if (!this.newTodoDescription.length) {
@@ -82,6 +92,7 @@ export default {
         isComplete: false
       });
 
+      this.updateLocalStorage();
       this.newTodoDescription = "";
       this.id += 1;
     },
@@ -97,9 +108,11 @@ export default {
 
       this.todos = todosCopy;
       this.todoBeingEdited = null;
+      this.updateLocalStorage();
     },
     removeTodo(incomingTodo) {
       this.todos = this.todos.filter(todo => todo !== incomingTodo);
+      this.updateLocalStorage();
     },
     setToEdit(todo) {
       this.descriptionBeingEdited = todo.description;
@@ -116,6 +129,11 @@ export default {
       todosCopy[todoIndex] = updatedTodo;
 
       this.todos = todosCopy;
+      this.updateLocalStorage();
+    },
+    updateLocalStorage() {
+      const parsed = JSON.stringify(this.todos);
+      localStorage.setItem("todos", parsed);
     }
   }
 };
